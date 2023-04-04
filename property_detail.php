@@ -1,6 +1,80 @@
 <?php
-session_start() ;
-require ("includes/database_connect.php");
+
+    session_start() ;
+    require ("includes/database_connect.php");
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : NULL;
+    $property_id = $_GET['property_id'];
+    
+    //select those details which is under same city and same property_id --->
+    $sql_1 = "SELECT * ,p.id as property_id , p.name as property_name , c.id as city_id
+                FROM properties INNER JOIN cities c ON p.city_id = c.id 
+                WHERE p.id = $property_id " ;
+    $result_1 = mysqli_query($conn , $sql_1) ;
+    if(!$result)
+    {
+        echo "Something went wrong !" ;
+        return ;
+    }
+
+    $property = mysqli_fetch_all($result_1) ;
+
+    if(!$property)
+    {
+        echo "Something went wrong !" ;
+        return ;
+    }
+
+    $sql_2 = "SELECT * FROM testimonials WHERE property_id = $property_id " ;
+
+    $result_2 = mysqli_query($conn , $sql_2) ;
+
+    if(!$result_2)
+    {
+        echo "Something went wrong !" ;
+        return ;
+    }
+
+    $testimonials = mysqli_fetch_all($result_2) ;
+
+    if(!$testimonials)
+    {
+        echo "Something went wrong !";
+        return ;
+    }
+
+    $sql_3 = "SELECT a.* FROM amenities a 
+                INNER JOIN propeties_amenities pa WHERE a.id = pa.amenity_id 
+                WHERE pa.property_id = $property_id " ;
+    
+    $result_3 = mysqli_query($conn , $sql_3) ;
+
+    if(!$result_3)
+    {
+        echo "Something went wrong !" ;
+        return ;
+    }
+
+    $amenities = mysqli_fetch_all($result_3) ;
+
+    if(!$amenities)
+    {
+        echo "Something went wrong !" ;
+        return ;
+    }
+
+    $sql_4 = "SELECT * FROM interested_users_properties WHERE property_id = $property_id " ;
+
+    $result_4 = mysqli_query($conn , $sql_4) ;
+
+    if(!$result_4)
+    {
+        echo "Something went wrong !" ;
+        return ;
+    }
+
+    $interested_users = mysqli_fetch_all($result_4) ;
+    $interested_users_count = mysqli_num_rows($result_4) ;
+
 ?>
 
  <!DOCTYPE html>

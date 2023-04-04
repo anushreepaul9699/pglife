@@ -2,6 +2,55 @@
 session_start() ;
 require "includes/database_connect.php";
 
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : NULL ; 
+
+//fetching user's input in the search box :--- >
+$city_name = $_GET["city"] ;
+
+//checking (city name is a valid city name or not )--->
+$sql_1 = "SELECT * FROM cities where name = '$city_name' " ;
+
+$result_1 = mysqli_query($conn , $sql_1) ;
+
+if(!$result_1)
+{
+    echo "Sorry! We do not have any PG listed in this city." ;
+    return ;
+}
+
+//fetching associated array of the respected city --- >
+$city = mysqli_fetch_assoc($result_1) ;
+
+//fetching city id --->
+$city_id = $city['id'] ;
+
+//selecting those properties from properties table whose city id is equal to the fetched city id : --->
+$sql_2 = "SELECT * FROM properties where city_id = '$city_id' " ;
+
+$result_2 = mysqli_query($conn , $sql_2) ;
+
+if(!$result_2)
+{
+    echo "Something went wrong!" ;
+    return ;
+}
+
+$properties = mysqli_fetch_assoc($result_2) ;
+
+
+$sql_3 = "SELECT * FROM interested_users_properties iup 
+         INNER JOIN properties p 
+         ON iup.property_id = p.id 
+         WHERE p.city_id = $city_id " ;
+
+$result_3 = mysqli_query($conn , $sql_3) ;
+
+if (!$result_3) {
+    echo "Something went wrong!";
+    return;
+}
+
+$interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
 
 ?>
 

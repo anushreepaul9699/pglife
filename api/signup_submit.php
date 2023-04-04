@@ -1,5 +1,5 @@
 <?php
-    require("../includes/database_connect.php");
+    require "../includes/database_connect.php";
     
     // fetching user's input --->
     $full_name = $_POST['full_name'] ;
@@ -36,7 +36,7 @@
     }
 
     //else --> Insert the user's input in the database : --->
-    $sql = "INSERT INTO users(email, password, full_name, phone, gender, college_name) VALUES ('$full_name','$phone','$email','$password','$college_name','$gender')" ;
+    $sql = "INSERT INTO users(email, password, full_name, phone, gender, college_name) VALUES ('$email','$password','$full_name','$phone','$gender','$college_name')" ;
 
    $result = mysqli_query($conn , $sql) ;
 
