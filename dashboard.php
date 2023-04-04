@@ -1,7 +1,8 @@
 <?php
-session_start() ;
-require "includes/database_connect.php";
+    session_start() ;
+    require "includes/database_connect.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
