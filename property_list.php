@@ -14,12 +14,18 @@ $result_1 = mysqli_query($conn , $sql_1) ;
 
 if(!$result_1)
 {
-    echo "Sorry! We do not have any PG listed in this city." ;
+    echo "Something went wrong ! " ;
     return ;
 }
 
 //fetching associated array of the respected city --- >
 $city = mysqli_fetch_assoc($result_1) ;
+
+if(!$city)
+{
+    echo "Sorry! We do not have any PG listed in this city." ;
+    return ;
+}
 
 //fetching city id --->
 $city_id = $city['id'] ;
