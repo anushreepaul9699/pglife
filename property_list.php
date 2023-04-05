@@ -126,7 +126,7 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
                     <!-- calculating total rating by adding rating_food + rating_safety + rating_clean and then round it to 1 digit decimal -->
                     <?php
 
-                        $total_rating = ($property['rating_clean'] + $property['rating_food'] + $property['rating_safety']) / 3 ;
+                        $total_rating = ($property['rating_clean'] + $property['rating_food'] + $property['rating_safety']) / 3 ; // taking average of 3 
                         $total_rating = round($total_rating,1) ;
                     
                     ?>
@@ -182,16 +182,22 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
                     </div>
                     <div class="interested-container">
                         
+                         <!-- set interested user count to 0 & is_interested as false -->
                         <?php
                            $interested_users_count = 0 ;
                            $is_interested = false ;
 
+                           //foreach loop that iterate interested_users_properties (associative array : k - v ) 
                            foreach($interested_users_properties as $interested_user_property )
                            {
+                               //if the recieved interested_user_property is equal to the property_id
                                if($interested_user_property['property_id'] == $property['id'])
                                {
+                                 
+                                  //increase user's count
                                   $interested_users_count++ ;
-
+                                  
+                                  //if recieved user's id == intereseted_user_id then is_interested is true 
                                   if($interested_user_property['user_id'] == $user_id)
                                   {
                                       $is_interested = true ;
@@ -200,12 +206,13 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
 
                             }
                            
-
+                           //if the user's is interested in this property
                            if($is_interested)
                            {
                             
                             ?>
                            
+                            <!-- print this icon -->
                             <i class="fas fa-heart"></i>
 
                         <?php
@@ -216,6 +223,7 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
                            {
 
                         ?>
+                           <!-- else print this icon -->
                             <i class="far fa-heart"></i>
 
                         <?php
@@ -232,19 +240,23 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
                     <div class="property-gender">
                         <?php
                            
+                            // if property's gender == male 
                            if($property['gender'] == "male")
                            {
 
                         ?>
+                         <!-- print this icon -->
                         <img src="img/male.png" />
 
                         <?php
                            }
-
+                           
+                           //else if property's gender == femlae 
                            elseif ($property['gender'] == "female")
                            {
 
                            ?>
+                            <!-- print this icon --->
                             <img src="img/female.png" />
 
                         <?php
@@ -252,7 +264,7 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
 
                            else {
                         ?>
-
+                         <!-- else print this icon -->
                         <img src="img/unisex.png" />
 
                         <?php
@@ -275,13 +287,16 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC) ;
 
         <?php
             }
-
+            
+            //if count of properties is 0 
             if (count($properties) == 0)
             {
         
         ?>
 
                 <div class = "no-property-container" >
+
+                <!-- no pg's to list as interested -->
                     <p> No PG to list </p>
                 </div>
         <?php
