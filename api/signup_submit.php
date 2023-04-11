@@ -21,8 +21,9 @@
 
     if(!$result)
     {
-        echo "Something went wrong !" ;
-        exit ;
+        $response = array("success" => false, "message" => "Something went wrong !");
+        echo json_encode($response) ;
+        return ; 
 
     }
 
@@ -31,8 +32,10 @@
 
     if ($row_count != 0)
     {
-        echo "The email is already registered with us ! " ;
-        exit ;
+        $response = array("success" => false, "message" => "The email is already registered with us ! ");
+        echo json_encode($response) ;
+        return ; 
+
     }
 
     //else --> Insert the user's input in the database : --->
@@ -46,13 +49,12 @@
       exit ;
    }
 
-   echo "Your account has been created successfully !" ;
+   
+   $response = array("success" => false, "message" => "Your account has been created successfully !");
+   echo json_encode($response) ;
+   mysqli_close($conn) ;
 
    ?>
-
-   Click <a href = "../index.php">here </a>to continue.
-   <?php
-    mysqli_close($conn) ;
 
     
 
