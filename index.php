@@ -44,7 +44,7 @@ session_start() ;
         </h1>
         <div class="row">
             <div class="city-card-container col-md">
-                <a href="property_list.php?city=Delhi">PG in Delhi
+                <a href="property_list.php?city=Delhi">
                     <div class="city-card rounded-circle">
                         <img src="img/delhi.png" class="city-img" />
                     </div>
@@ -52,7 +52,7 @@ session_start() ;
             </div>
 
             <div class="city-card-container col-md">
-                <a href="property_list.php?city=Mumbai">PG in Mumbai
+                <a href="property_list.php?city=Mumbai">
                     <div class="city-card rounded-circle">
                         <img src="img/mumbai.png" class="city-img" />
                     </div>
@@ -60,7 +60,7 @@ session_start() ;
             </div>
 
             <div class="city-card-container col-md">
-                <a href="property_list.php?city=Bengaluru">PG in Bengaluru
+                <a href="property_list.php?city=Bengaluru">
                     <div class="city-card rounded-circle">
                         <img src="img/bangalore.png" class="city-img" />
                     </div>
@@ -68,7 +68,7 @@ session_start() ;
             </div>
 
             <div class="city-card-container col-md">
-                <a href="property_list.php?city=Hyderabad">PG in Hyderabad
+                <a href="property_list.php?city=Hyderabad">
                     <div class="city-card rounded-circle">
                         <img src="img/hyderabad.png" class="city-img" />
                     </div>
