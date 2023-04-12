@@ -1,66 +1,45 @@
 <?php
-    
 session_start();
 require "includes/database_connect.php";
 
-//fetching user id :---- >
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : NULL;
-
-//getting city name that is inserted in the search bar --- >
 $city_name = $_GET["city"];
 
-//Selecting records of that city ---- > 
 $sql_1 = "SELECT * FROM cities WHERE name = '$city_name'";
-
-//checking query run successfully or not ---- >
 $result_1 = mysqli_query($conn, $sql_1);
 if (!$result_1) {
     echo "Something went wrong!";
     return;
 }
-
-//if query run successfully : then store the records in the form of associative array in the $city ---->
 $city = mysqli_fetch_assoc($result_1);
-
-//if assoc. array returns null : No Pg listed in this city ---->
 if (!$city) {
     echo "Sorry! We do not have any PG listed in this city.";
     return;
 }
-
-//else fetch the city id from the city's records : in order to fetch the respective properties using that city id ---->
 $city_id = $city['id'];
 
-//fetching properties with respect to city id --- >
+
 $sql_2 = "SELECT * FROM properties WHERE city_id = $city_id";
-
 $result_2 = mysqli_query($conn, $sql_2);
-
 if (!$result_2) {
     echo "Something went wrong!";
     return;
 }
-
-//store the properties's records in the $properties variable in the form of assoc. array --- >
 $properties = mysqli_fetch_all($result_2, MYSQLI_ASSOC);
 
-//fetching the interested properties 's records using property_id that is fetched using city_id --->
+
 $sql_3 = "SELECT * 
             FROM interested_users_properties iup
             INNER JOIN properties p ON iup.property_id = p.id
             WHERE p.city_id = $city_id";
-
 $result_3 = mysqli_query($conn, $sql_3);
 if (!$result_3) {
     echo "Something went wrong!";
     return;
 }
-
-//store the interested properties's records in the $interested_users_properties variable in the form of assoc. array --->
 $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
 ?>
 
-<!-- starting html code -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,13 +50,10 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
     <?php
     include "includes/head_links.php";
     ?>
-
     <link href="css/property_list.css" rel="stylesheet" />
-
 </head>
 
 <body>
-
     <?php
     include "includes/header.php";
     ?>
@@ -88,9 +64,7 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
                 <a href="index.php">Home</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-
                 <?php echo $city_name; ?>
-
             </li>
         </ol>
     </nav>
@@ -112,106 +86,65 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
         </div>
 
         <?php
-        foreach ($properties as $property) 
-        {
-            // storing thee images in the array using glob function ---> and fetching that images using property's id (index) --->
+        foreach ($properties as $property) {
             $property_images = glob("img/properties/" . $property['id'] . "/*");
         ?>
-            <div class="property-card row">
+            <div class="property-card property-id-<?= $property['id'] ?> row">
                 <div class="image-container col-md-4">
-
                     <img src="<?= $property_images[0] ?>" />
-5
                 </div>
                 <div class="content-container col-md-8">
                     <div class="row no-gutters justify-content-between">
-                        
                         <?php
-                        //calculating the total rating as ($property['rating_clean] + $property['rating_food'] + $property['rating_safety] / 3) --- >
-
                         $total_rating = ($property['rating_clean'] + $property['rating_food'] + $property['rating_safety']) / 3;
-
-                        //round to 1 --- >
                         $total_rating = round($total_rating, 1);
-
                         ?>
-
                         <div class="star-container" title="<?= $total_rating ?>">
-                            
                             <?php
-                              //storing the total rating in the rating variable --- >
-                                $rating = $total_rating;
-
-                                //for loop that runs from 0 to 5 --- >
-                                for ($i = 0; $i < 5; $i++) 
-                                {
-                                    if ($rating >= $i + 0.8) 
-                                    {
+                            $rating = $total_rating;
+                            for ($i = 0; $i < 5; $i++) {
+                                if ($rating >= $i + 0.8) {
                             ?>
                                     <i class="fas fa-star"></i>
-                            
-                            <?php
-
-                                } 
-                                elseif ($rating >= $i + 0.3) 
-                                {
-                            
-                            ?>
-                                    <i class="fas fa-star-half-alt"></i>
-                                
                                 <?php
-
-                                } 
-                                    else 
-                                    {
+                                } elseif ($rating >= $i + 0.3) {
+                                ?>
+                                    <i class="fas fa-star-half-alt"></i>
+                                <?php
+                                } else {
                                 ?>
                                     <i class="far fa-star"></i>
                             <?php
-                                
                                 }
                             }
-
                             ?>
                         </div>
                         <div class="interested-container">
-                            
                             <?php
-                                //interested user's count 
                             $interested_users_count = 0;
                             $is_interested = false;
-
-                            foreach ($interested_users_properties as $interested_user_property) 
-                            {
-                                if ($interested_user_property['property_id'] == $property['id']) 
-                                {
+                            foreach ($interested_users_properties as $interested_user_property) {
+                                if ($interested_user_property['property_id'] == $property['id']) {
                                     $interested_users_count++;
 
-                                    if ($interested_user_property['user_id'] == $user_id) 
-                                    {
+                                    if ($interested_user_property['user_id'] == $user_id) {
                                         $is_interested = true;
                                     }
                                 }
                             }
 
-                            if ($is_interested) 
-                            {
+                            if ($is_interested) {
                             ?>
                                 <i class="is-interested-image fas fa-heart" property_id="<?= $property['id'] ?>"></i>
-                            
                             <?php
-                                    } 
-                                        
-                                    else 
-                                        {
+                            } else {
                             ?>
                                 <i class="is-interested-image far fa-heart" property_id="<?= $property['id'] ?>"></i>
-                            
                             <?php
-                                }
+                            }
                             ?>
-
                             <div class="interested-text">
-                            <span class="interested-user-count"><?= $interested_users_count ?></span> interested
+                                <span class="interested-user-count"><?= $interested_users_count ?></span> interested
                             </div>
                         </div>
                     </div>
@@ -219,21 +152,12 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
                         <div class="property-name"><?= $property['name'] ?></div>
                         <div class="property-address"><?= $property['address'] ?></div>
                         <div class="property-gender">
-                            <!-- now the gender part to print gender icon -->
-                            
                             <?php
-
-                            if ($property['gender'] == "male")
-                            
-                            {
-                                ?>
-
+                            if ($property['gender'] == "male") {
+                            ?>
                                 <img src="img/male.png" />
-                            
                             <?php
-                                    } 
-                                        elseif ($property['gender'] == "female") 
-                                        {
+                            } elseif ($property['gender'] == "female") {
                             ?>
                                 <img src="img/female.png" />
                             <?php
@@ -243,7 +167,6 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
                             <?php
                             }
                             ?>
-
                         </div>
                     </div>
                     <div class="row no-gutters">
@@ -260,17 +183,14 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
         <?php
         }
 
-        //if count of properties are 0 :--->
         if (count($properties) == 0) {
         ?>
             <div class="no-property-container">
                 <p>No PG to list</p>
             </div>
-        
         <?php
-            }
+        }
         ?>
-
     </div>
 
     <div class="modal fade" id="filter-modal" tabindex="-1" role="dialog" aria-labelledby="filter-heading" aria-hidden="true">
@@ -310,12 +230,12 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
     </div>
 
     <?php
-    include "includes/signup-modal.php";
-    include "includes/login-modal.php";
+    include "includes/signup_modal.php";
+    include "includes/login_modal.php";
     include "includes/footer.php";
     ?>
 
-<script type="text/javascript" src="js/property_list.js"></script>
+    <script type="text/javascript" src="js/property_list.js"></script>
 </body>
 
 </html>

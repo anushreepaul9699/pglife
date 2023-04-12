@@ -78,12 +78,12 @@ session_start() ;
     </div>
 
   <?php
-    include "includes/signup-modal.php" ;
+    include "includes/signup_modal.php" ;
   ?>
 
     <?php
 
-        include "includes/login-modal.php" ;
+        include "includes/login_modal.php" ;
     ?>
 
    <?php

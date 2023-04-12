@@ -22,7 +22,7 @@ window.addEventListener("load" , function()
         XHR.addEventListener("error" , on_error) ;
 
         //Set up Request -->
-        XHR.open("GET" , "api/toggle_interested.php?property_id = "+property_id) ;
+        XHR.open("GET" , "api/toggle_interested.php?property_id ="+property_id) ;
 
         //initiate the request (send the http request to the server)
         XHR.send() ;
