@@ -70,7 +70,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb py-2">
             <li class="breadcrumb-item">
-                <a href="index.html">Home</a>
+                <a href="index.php">Home</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
                 Dashboard
@@ -114,7 +114,7 @@
                     $property_images = glob("img/properties/" . $property['id'] . "/*");
                 ?>
 
-            <div class="property-card property-id-1 row">
+            <div class="property-card property-id-<?= $property['id'] ?> row">
                 <div class="image-container col-md-4">
                     <img src="<?= $property_images[0] ?>" />
                 </div>
@@ -217,7 +217,7 @@
     <?php
         include "includes/footer.php" ;
     ?>
-    
+    <script type="text/javascript" src="js/dashboard.js"></script>
 </body>
 
 </html>

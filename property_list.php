@@ -196,7 +196,7 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
                             if ($is_interested) 
                             {
                             ?>
-                                <i class="fas fa-heart"></i>
+                                <i class="is-interested-image fas fa-heart" property_id="<?= $property['id'] ?>"></i>
                             
                             <?php
                                     } 
@@ -204,13 +204,15 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
                                     else 
                                         {
                             ?>
-                                <i class="far fa-heart"></i>
+                                <i class="is-interested-image far fa-heart" property_id="<?= $property['id'] ?>"></i>
                             
                             <?php
                                 }
                             ?>
 
-                            <div class="interested-text"><?= $interested_users_count ?> interested</div>
+                            <div class="interested-text">
+                            <span class="interested-user-count"><?= $interested_users_count ?></span> interested
+                            </div>
                         </div>
                     </div>
                     <div class="detail-container">
@@ -250,7 +252,7 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
                             <div class="rent-unit">per month</div>
                         </div>
                         <div class="button-container col-6">
-                            <a href="property_detail.php?property_id= <?= $property['id'] ?>" class="btn btn-primary">View</a>
+                            <a href="property_detail.php?property_id=<?= $property['id'] ?>" class="btn btn-primary">View</a>
                         </div>
                     </div>
                 </div>
@@ -312,6 +314,8 @@ $interested_users_properties = mysqli_fetch_all($result_3, MYSQLI_ASSOC);
     include "includes/login-modal.php";
     include "includes/footer.php";
     ?>
+
+<script type="text/javascript" src="js/property_list.js"></script>
 </body>
 
 </html>

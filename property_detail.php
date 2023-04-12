@@ -420,6 +420,8 @@ $interested_users_count = mysqli_num_rows($result_4);
     include "includes/login-modal.php";
     include "includes/footer.php";
     ?>
+
+    <script type="text/javascript" src="js/property_detail.js"></script>
 </body>
 
 </html>
