@@ -1,7 +1,12 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", function () 
+{
     var is_interested_images = document.getElementsByClassName("is-interested-image");
-    Array.from(is_interested_images).forEach(element => {
-        element.addEventListener("click", function (event) {
+    Array.from(is_interested_images).forEach(element => 
+    
+    {
+        element.addEventListener("click", function (event) 
+        
+        {
             var XHR = new XMLHttpRequest();
             var property_id = event.target.getAttribute("property_id");
 
@@ -23,11 +28,15 @@ window.addEventListener("load", function () {
     });
 });
 
-var remove_interested_success = function (event) {
+var remove_interested_success = function (event) 
+
+{
     document.getElementById("loading").style.display = 'none';
 
     var response = JSON.parse(event.target.responseText);
-    if (response.success) {
+    if (response.success) 
+    
+    {
         var property_id = response.property_id;
 
         document.getElementsByClassName("property-id-" + property_id)[0].style.display = 'none';
