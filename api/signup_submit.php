@@ -49,9 +49,11 @@
       exit ;
    }
 
-   
+  //print the message (when user is signup successfully) ---> 
    $response = array("success" => false, "message" => "Your account has been created successfully !");
    echo json_encode($response) ;
+
+//close the connection --->
    mysqli_close($conn) ;
 
    
