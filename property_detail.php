@@ -9,7 +9,6 @@ $sql_1 = "SELECT *, p.id AS property_id, p.name AS property_name, c.name AS city
             FROM properties p
             INNER JOIN cities c ON p.city_id = c.id 
             WHERE p.id = $property_id";
-
 $result_1 = mysqli_query($conn, $sql_1);
 if (!$result_1) {
     echo "Something went wrong!";
@@ -416,8 +415,8 @@ $interested_users_count = mysqli_num_rows($result_4);
     </div>
 
     <?php
-    include "includes/signup-modal.php";
-    include "includes/login-modal.php";
+    include "includes/signup_modal.php";
+    include "includes/login_modal.php";
     include "includes/footer.php";
     ?>
 
